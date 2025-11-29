@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do App</title>
+  </head>
+
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-xl">
+      <div class="card bg-white shadow-xl p-6 rounded-xl">
+        <h1 class="text-2xl font-bold mb-4">📝 To-Do List</h1>
+
+        <!-- Add task -->
+        <form method="POST" action="" class="flex gap-2 mb-4">
+          {% csrf_token %}
+          <input name="task" id="" type="text" placeholder="Add new task..." class="input input-bordered w-full" />
+
+          <button class="btn btn-primary">Add</button>
+        </form>
+
+        <!-- Task List -->
+        <ul class="space-y-3">
+          {% for item in tasks %}
+          <li class="flex items-center justify-between bg-base-200 p-3 rounded-lg">
+            <div class="flex items-center gap-3">
+              <input type="checkbox" {% if item.completed %}checked{% endif %} class="checkbox checkbox-primary" />
+
+              <span class="{% if item.completed %}line-through text-gray-400{% endif %}"> {{ item.title }} </span>
+            </div>
+
+            <a href="{% url 'delete_task' item.id %}" class="btn btn-error btn-sm">Delete</a>
+          </li>
+          {% empty %}
+          <p class="text-gray-500 text-center">Belum ada tugas 📭</p>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
